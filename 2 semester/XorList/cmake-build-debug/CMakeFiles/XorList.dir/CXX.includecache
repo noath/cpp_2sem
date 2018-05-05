@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Arkady/CLionProjects/XorList/StackAllocator.h
+iostream
+-
+
+C:/Users/Arkady/CLionProjects/XorList/XorList.h
+iostream
+-
+algorithm
+-
+memory
+-
+
+C:/Users/Arkady/CLionProjects/XorList/main.cpp
+cstdint
+-
+list
+-
+ctime
+-
+random
+-
+XorList.h
+C:/Users/Arkady/CLionProjects/XorList/XorList.h
+StackAllocator.h
+C:/Users/Arkady/CLionProjects/XorList/StackAllocator.h
+

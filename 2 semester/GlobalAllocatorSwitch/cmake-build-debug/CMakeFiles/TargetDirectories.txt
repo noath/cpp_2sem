@@ -1,0 +1,3 @@
+C:/Users/Arkady/CLionProjects/GlobalAllocatorSwitch/cmake-build-debug/CMakeFiles/GlobalAllocatorSwitch.dir
+C:/Users/Arkady/CLionProjects/GlobalAllocatorSwitch/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Arkady/CLionProjects/GlobalAllocatorSwitch/cmake-build-debug/CMakeFiles/rebuild_cache.dir
