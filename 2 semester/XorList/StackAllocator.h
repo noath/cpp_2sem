@@ -14,7 +14,7 @@ public:
     typedef T &reference;
     typedef const T &const_reference;
 
-    typedef ptrdiff_t difference_type;
+    typedef std::ptrdiff_t difference_type;
     typedef size_t size_type;
 
 public:
@@ -24,15 +24,6 @@ public:
     };
 
 public:
-    //singleton
-    static StackAllocator &getInstance() {
-        static StackAllocator instance;
-        return instance;
-    }
-
-    //StackAllocator(const StackAllocator &other) {};
-
-    //StackAllocator &operator=(const StackAllocator &other) {};
 
 public:
     explicit StackAllocator() : chunk_cnt_(0), alloc_end_(nullptr), allocated_(0),
@@ -78,6 +69,16 @@ public:
 
     inline void deallocate(pointer ptr, size_type n) {
         //does nothing
+    }
+
+    template< class U, class... Args >
+    void construct( U* p, Args&&... args ){
+        new((void*)p) U(std::forward<Args>(args)...);
+    }
+
+    template<class U>
+    void destroy(U* p){
+        ((T*)p)->~T();
     }
 
 private:

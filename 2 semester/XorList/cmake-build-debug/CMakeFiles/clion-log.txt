@@ -1,4 +1,0 @@
-C:\Users\Arkady\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\181.4668.25\bin\cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Programming/MinGW-w64-x86/mingw64/bin/mingw32-make.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\Arkady\CLionProjects\XorList
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/Arkady/CLionProjects/XorList/cmake-build-debug

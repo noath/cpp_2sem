@@ -1,3 +1,0 @@
-C:\Users\Arkady\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\181.4668.25\bin\cmake\bin\cmake.exe -E remove -f CMakeFiles\XorList.dir/objects.a
-C:\Programming\MinGW-w64-x86\mingw64\bin\ar.exe cr CMakeFiles\XorList.dir/objects.a @CMakeFiles\XorList.dir\objects1.rsp
-C:\Programming\MinGW-w64-x86\mingw64\bin\g++.exe -lm -fno-stack-limit -g  -static-libgcc -static-libstdc++ -static -Wl,--whole-archive CMakeFiles\XorList.dir/objects.a -Wl,--no-whole-archive  -o XorList.exe -Wl,--out-implib,libXorList.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\XorList.dir\linklibs.rsp

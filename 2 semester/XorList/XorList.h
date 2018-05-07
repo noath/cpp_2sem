@@ -78,8 +78,8 @@ public:
     template<typename U>
     void push_back(U &&new_elem) {
         Node<T> *new_node = allocator_.allocate(1);
+        allocator_.construct(new_node, Node<T>());
         new_node->value = std::forward<T>(new_elem);
-        //allocator_.construct(new_node, Node<T>());
         if (empty()) {
             new_node->xor_address = reinterpret_cast<INT_PTR>(nullptr);
             first_ = new_node;
@@ -99,7 +99,7 @@ public:
     template <typename U>
     void push_front(U &&new_elem) {
         Node<T> *new_node = allocator_.allocate(1);
-        //allocator_.construct(new_node, Node<T>());
+        allocator_.construct(new_node, Node<T>());
         new_node->value = std::forward <T> (new_elem);
         if (empty()) {
             new_node->xor_address = reinterpret_cast<INT_PTR>(nullptr);
@@ -141,7 +141,7 @@ public:
             }
             --size_;
 
-            //allocator_.destroy(old);
+            allocator_.destroy(old);
             allocator_.deallocate(old, 1);
         }
 
@@ -173,7 +173,7 @@ public:
 
             --size_;
 
-            //allocator_.destroy(old);
+            allocator_.destroy(old);
             allocator_.deallocate(old, 1);
         }
 
@@ -273,13 +273,12 @@ public:
             return tmp;
         }
 
-    //should be private here
-    public:
+    private:
         Node<T>* prev_node_;
         Node<T>* cur_node_;
         Iterator(Node<T>* prev_node, Node<T>* cur_node) :
                 prev_node_(prev_node), cur_node_(cur_node) {}
-        friend class XorList;
+        friend class XorList; //for end() and begin()
     };
 
 public:
@@ -291,14 +290,15 @@ public:
         return Iterator(nullptr, first_);
     }
 
-public:
+private:
     template <typename U>
-    void insert_before(Iterator it, U&& value){
+    void __insert_before(Iterator it, U&& value){
         if (it == begin()){
             push_front(value);
         }
         else{
             Node<T> *new_node = allocator_.allocate(1);
+            allocator_.construct(new_node, Node<T>());
             new_node->value = std::forward<T>(value);
 
             new_node->xor_address = reinterpret_cast<INT_PTR>(it.prev_node_) ^ reinterpret_cast<INT_PTR>(it.cur_node_);
@@ -309,15 +309,17 @@ public:
             it.cur_node_->xor_address ^= reinterpret_cast<INT_PTR>(it.prev_node_);
             it.cur_node_->xor_address ^= reinterpret_cast<INT_PTR>(new_node);
         }
+        ++size_;
     }
 
     template <typename U>
-    void insert_after(Iterator it, U&& value){
+    void __insert_after(Iterator it, U&& value){
         if (it == end()){
             push_back(value);
         }
         else{
             Node<T> *new_node = allocator_.allocate(1);
+            allocator_.construct(new_node, Node<T>());
             new_node->value = std::forward<T>(value);
             Node<T> *next_node = next(it.prev_node_, it.cur_node_);
 
@@ -328,6 +330,41 @@ public:
 
             next_node->xor_address ^= reinterpret_cast<INT_PTR>(it.cur_node_);
             next_node->xor_address ^= reinterpret_cast<INT_PTR>(new_node);
+        }
+        ++size_;
+    }
+
+public:
+    void insert_before(Iterator it, T& value){
+        __insert_before(it, value);
+    }
+    void insert_before(Iterator it, T&& value){
+        __insert_before(it, value);
+    }
+    void insert_after(Iterator it, T& value) {
+        __insert_after(it, value);
+    }
+    void insert_after(Iterator it, T&& value) {
+        __insert_after(it, value);
+    }
+    void erase(Iterator it){
+        if (it == begin()){
+            pop_front();
+        }
+        else if (it == end()){
+            pop_back();
+        }
+        else {
+            Node<T>* next_node = next(it.prev_node_, it.cur_node_);
+
+            it.prev_node_->xor_address ^= reinterpret_cast<INT_PTR>(it.cur_node_);
+            it.prev_node_->xor_address ^= reinterpret_cast<INT_PTR>(next_node);
+
+            next_node->xor_address ^= reinterpret_cast<INT_PTR>(it.cur_node_);
+            next_node->xor_address ^= reinterpret_cast<INT_PTR>(it.prev_node_);
+
+            allocator_.destroy(it.cur_node_);
+            allocator_.deallocate(it.cur_node_, 1);
         }
     }
 };
