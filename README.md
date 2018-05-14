@@ -1,4 +1,4 @@
-#MIPT, C++ course (2nd semester)
+# MIPT, C++ course (2 sem)
 * StackAllocator
 * AllocatorMemorySwitcher
 * MyTyple
