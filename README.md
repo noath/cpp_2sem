@@ -1,4 +1,4 @@
 # MIPT, C++ course, 2 semester
-* StackAllocator
+* StackAllocator and XorList
 * AllocatorMemorySwitcher
 * Templates usage ("Ahalaimahalai")
